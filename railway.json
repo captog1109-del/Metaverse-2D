@@ -1,9 +1,9 @@
 {
-  "build": {
-    "builder": "NIXPACKS"
-  },
-  "deploy": {
-    "startCommand": "node server.js",
-    "restartPolicyType": "ON_FAILURE"
+  "builder": "nixpacks",
+  "services": {
+    "api": {
+      "buildCommand": "npm install",
+      "startCommand": "npm start"
+    }
   }
 }
