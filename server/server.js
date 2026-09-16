@@ -5,8 +5,13 @@ const { Server } = require("socket.io");
 const app = express();
 const cors = require('cors');
 
+const allowedOrigins = (process.env.CLIENT_ORIGINS || 'https://metaverse-2-d-six.vercel.app,http://localhost:3000')
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
 app.use(cors({
-  origin: ['https://metaverse-2-d-six.vercel.app', 'http://localhost:3000'],
+  origin: allowedOrigins,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
@@ -15,7 +20,8 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: ['https://metaverse-2-d-six.vercel.app', 'http://localhost:3000'],
+    origin: allowedOrigins,
+    methods: ['GET', 'POST'],
     credentials: true
   }
 });
