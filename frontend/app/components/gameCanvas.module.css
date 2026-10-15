@@ -1,0 +1,62 @@
+/* Wrapper around the Phaser canvas + HTML name tags. */
+
+.root {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: #000;
+}
+
+.host {
+  position: absolute;
+  inset: 0;
+}
+
+.host canvas {
+  display: block;
+}
+
+/* name tags are positioned each frame from Phaser's camera, so they stay crisp over the canvas */
+.tags {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.tag {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px 3px 7px;
+  border-radius: 999px;
+  background: rgba(255, 253, 246, 0.82);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 12px -4px rgba(20, 28, 48, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  white-space: nowrap;
+}
+
+.tagMe {
+  background: rgba(238, 231, 251, 0.9);
+  border-color: rgba(182, 151, 239, 0.9);
+}
+
+.tagDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.tagName {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--mv-ink);
+}
