@@ -1,0 +1,173 @@
+/* HUD layered over the Phaser canvas. Wrapper ignores pointer events so the game keeps its input. */
+
+.hud {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right))
+    max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+}
+
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--mv-ink);
+  background: rgba(255, 253, 246, 0.72);
+  -webkit-backdrop-filter: blur(16px) saturate(1.25);
+  backdrop-filter: blur(16px) saturate(1.25);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 0 10px 28px -16px rgba(32, 40, 55, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+a.chip {
+  pointer-events: auto;
+  transition: background 0.15s ease;
+}
+
+a.chip:hover {
+  background: rgba(255, 253, 246, 0.92);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--mv-primary);
+  box-shadow: 0 0 0 3px rgba(229, 72, 59, 0.18);
+}
+
+.live {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--mv-green);
+  box-shadow: 0 0 0 3px rgba(15, 157, 88, 0.2);
+}
+
+.count {
+  font-variant-numeric: tabular-nums;
+}
+
+/* empty state: you are the only one here */
+.empty {
+  position: absolute;
+  top: max(16px, env(safe-area-inset-top));
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: min(440px, calc(100% - 32px));
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--mv-ink-muted);
+  background: rgba(255, 253, 246, 0.72);
+  -webkit-backdrop-filter: blur(16px) saturate(1.25);
+  backdrop-filter: blur(16px) saturate(1.25);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 0 10px 28px -16px rgba(32, 40, 55, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  animation: fade 0.3s ease;
+}
+
+.empty strong {
+  color: var(--mv-ink);
+  font-weight: 600;
+}
+
+.hints {
+  position: absolute;
+  left: max(16px, env(safe-area-inset-left));
+  bottom: max(20px, env(safe-area-inset-bottom));
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  font-size: 12px;
+  color: var(--mv-ink-muted);
+  background: rgba(255, 253, 246, 0.66);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
+.hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.key {
+  display: inline-block;
+  min-width: 22px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(29, 39, 64, 0.12);
+  font-family: var(--mv-font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--mv-ink);
+}
+
+.touchNote {
+  display: none;
+}
+
+@keyframes fade {
+  from { opacity: 0; transform: translate(-50%, -4px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@media (max-width: 719px) {
+  .chip {
+    height: 40px;
+    padding: 0 12px;
+    font-size: 13px;
+  }
+
+  .empty {
+    top: calc(max(16px, env(safe-area-inset-top)) + 52px);
+  }
+
+  .hints {
+    bottom: max(88px, env(safe-area-inset-bottom));
+  }
+}
+
+/* phones/tablets without a keyboard: movement is arrow keys only, so say so */
+@media (hover: none) and (pointer: coarse) {
+  .keyHints {
+    display: none;
+  }
+
+  .touchNote {
+    display: inline;
+    white-space: normal;
+    line-height: 1.4;
+  }
+
+  .hints {
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(20px, env(safe-area-inset-bottom));
+  }
+}
